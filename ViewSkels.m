@@ -9,7 +9,7 @@ frameRate = vidObj.FrameRate;
 shotFrames = shotFrameNos./frameRate;
 % k = 1;
 
-for j = 1:length(shotFrames)
+for j = 1:1%length(shotFrames)
     shotPoints = 0;
     vidObj.currentTime = shotFrames(j,1);
 % while hasFrame(vidObj)    
@@ -42,7 +42,7 @@ for j = 1:length(shotFrames)
             end
             if (shotPoints == 0)
                 shotPoints = indPoints;
-            elseif (abs(indPoints(2,1)-shotPoints(2,1,end))/shotPoints(2,1,end)<0.2 && pointSelected == 0)
+            elseif (abs(indPoints(2,1)-shotPoints(2,1,end))/shotPoints(2,1,end)<0.2 && abs(indPoints(2,2)-shotPoints(2,2,end))/shotPoints(2,2,end)<0.2 && pointSelected == 0)
                 shotPoints = cat(3,shotPoints,indPoints); %create x y time array
                 pointSelected = 1;
             end
