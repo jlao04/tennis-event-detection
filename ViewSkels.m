@@ -11,7 +11,7 @@ displayvid = 1;
 frameRate = vidObj.FrameRate;
 shotFrames = shotFrameNos./frameRate;
 % k = 1;
-allShots = zeros(length(shotFrames),14*2*numSamples);
+allShots = zeros(length(shotFrames),18*2*numSamples);
 for j = 1:length(shotFrames)
     shotPoints = 0;
     vidObj.currentTime = shotFrames(j,1);
@@ -144,10 +144,11 @@ for j = 1:length(shotFrames)
             end
         end
     end
-    removeFeat = interpShot([2:4,6:14,17:18],:,:); %remove bad features
+%     removeFeat = interpShot([2:4,6:14,17:18],:,:); %remove bad features
+    removeFeat = interpShot;
     singleCol = removeFeat(:);
     singleRow = singleCol.';
     allShots(j,:) = singleRow;
 end
 %save training data
-save('trainingDataNORW.mat','allShots')
+save('trainingDataALL.mat','allShots')

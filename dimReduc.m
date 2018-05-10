@@ -1,4 +1,5 @@
 %Take raw training data and perform PCA
+% temp = matfile('trainingDataALLupd.mat');
 temp = matfile('trainingData.mat');
 rawData = temp.rawData;
 no_dims = 5;
