@@ -5,3 +5,4 @@ ShaneFrances/
 testdir/
 *.asv
 *.mat
+trainingData.m
