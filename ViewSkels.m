@@ -151,4 +151,4 @@ for j = 1:length(shotFrames)
     allShots(j,:) = singleRow;
 end
 %save training data
-save('trainingDataALL.mat','allShots')
+% save('trainingDataALL.mat','allShots')
