@@ -2,4 +2,4 @@
 
 - 4th year university project
 - Developed in MATLAB
-- uses OpenPose data to recognise different tennis shots
+- Uses OpenPose data to recognise different tennis shots
