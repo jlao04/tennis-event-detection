@@ -6,3 +6,4 @@ testdir/
 *.asv
 *.mat
 trainingData.m
+README.txt

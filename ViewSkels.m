@@ -1,9 +1,17 @@
 vidObj = VideoReader('ShaneFrances.mp4');
 labelFolder = 'C:\Users\jlao1\Documents\Y4\FinalProj\Proj\ShaneFrances\OpenPoseData\';
-d = dir([labelFolder, '*.json']);
 shotFrameNos = csvread('shotFramesFull.csv');
+
+% vidObj = VideoReader('FedKry.mp4');
+% labelFolder = 'C:\Users\jlao1\Documents\Y4\FinalProj\Proj\FedKry\FedKry\';
+% shotFrameNos = csvread('testFrames.csv');
+
+
+d = dir([labelFolder, '*.json']);
+
 % shotFrameNos = csvread('shotFrames.csv');
-%shotFrameNos = (100,110);
+
+
 numSamples = 10;
 displayvid = 1;
 
@@ -11,7 +19,7 @@ displayvid = 1;
 frameRate = vidObj.FrameRate;
 shotFrames = shotFrameNos./frameRate;
 % k = 1;
-allShots = zeros(length(shotFrames),18*2*numSamples);
+allShots = zeros(length(shotFrames),14*2*numSamples);
 for j = 1:length(shotFrames)
     shotPoints = 0;
     vidObj.currentTime = shotFrames(j,1);
@@ -96,59 +104,60 @@ for j = 1:length(shotFrames)
         end
         if(displayvid == 1)
             drawnow;
-%             pause(0.05);
+            pause(0.05);
         end
 %         k = k+1;
     end
    
     %interpolation
      
-    interpShot = zeros(18,2,numSamples);
-    for n=1:18
-        time_in = shotFrameNos(j,1):1:shotFrameNos(j,2);
-        
-        x_in = shotPoints(n,1,:);
-        x_in = squeeze(x_in);
-        xe = cumsum(ones(size(x_in))).*x_in*eps;
-        xe = xe + cumsum(ones(size(x_in))).*(x_in==0)*eps;
-        x_in = x_in + xe;
-
-        y_in = shotPoints(n,2,:);
-        y_in = squeeze(y_in);
-        ye = cumsum(ones(size(y_in))).*y_in*eps;
-        ye = ye + cumsum(ones(size(y_in))).*(y_in==0)*eps;
-        y_in = y_in + ye;
-        
-        time_out = linspace(time_in(1), time_in(end), numSamples);
-        x_out = spline(time_in, x_in, time_out);
-        y_out = spline(time_in, y_in, time_out);
-        
-        for m=1:numSamples
-            interpShot(n,1,m) = x_out(m);
-            interpShot(n,2,m) = y_out(m);
-%             interpShot(n,3,m) = time_out(m);
-        end
-    end
-    
-    %centering skeletons around neck
-    center = 0;
-    for ii=1:numSamples
-        center = interpShot(2,:,ii);
-        for jj=1:18
-            for kk=1:2                 
-                if(interpShot(jj,kk,ii) < 1)
-%                 interpShot(jj,kk,ii) = 0;
-                    interpShot(jj,kk,ii) = center(kk);
-                end
-                interpShot(jj,kk,ii) = interpShot(jj,kk,ii) - center(kk);
-            end
-        end
-    end
+%     interpShot = zeros(18,2,numSamples);
+%     for n=1:18
+%         time_in = shotFrameNos(j,1):1:shotFrameNos(j,2);
+%         
+%         x_in = shotPoints(n,1,:);
+%         x_in = squeeze(x_in);
+%         xe = cumsum(ones(size(x_in))).*x_in*eps;
+%         xe = xe + cumsum(ones(size(x_in))).*(x_in==0)*eps;
+%         x_in = x_in + xe;
+% 
+%         y_in = shotPoints(n,2,:);
+%         y_in = squeeze(y_in);
+%         ye = cumsum(ones(size(y_in))).*y_in*eps;
+%         ye = ye + cumsum(ones(size(y_in))).*(y_in==0)*eps;
+%         y_in = y_in + ye;
+%         
+%         time_out = linspace(time_in(1), time_in(end), numSamples);
+%         x_out = spline(time_in, x_in, time_out);
+%         y_out = spline(time_in, y_in, time_out);
+%         
+%         for m=1:numSamples
+%             interpShot(n,1,m) = x_out(m);
+%             interpShot(n,2,m) = y_out(m);
+% %             interpShot(n,3,m) = time_out(m);
+%         end
+%     end
+%     
+%     %centering skeletons around neck
+%     center = 0;
+%     for ii=1:numSamples
+%         center = interpShot(2,:,ii);
+%         for jj=1:18
+%             for kk=1:2                 
+%                 if(interpShot(jj,kk,ii) < 1)
+% %                 interpShot(jj,kk,ii) = 0;
+%                     interpShot(jj,kk,ii) = center(kk);
+%                 end
+%                 interpShot(jj,kk,ii) = interpShot(jj,kk,ii) - center(kk);
+%             end
+%         end
+%     end
+%     
 %     removeFeat = interpShot([2:4,6:14,17:18],:,:); %remove bad features
-    removeFeat = interpShot;
-    singleCol = removeFeat(:);
-    singleRow = singleCol.';
-    allShots(j,:) = singleRow;
+% %     removeFeat = interpShot;
+%     singleCol = removeFeat(:);
+%     singleRow = singleCol.';
+%     allShots(j,:) = singleRow;
 end
 %save training data
-% save('trainingDataALL.mat','allShots')
+% save('testData.mat','allShots');
